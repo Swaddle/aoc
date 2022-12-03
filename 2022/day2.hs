@@ -1,8 +1,5 @@
-
-
 import Text.Parsec
 import Text.Parsec.String
-
 
 {-# 
     A Rock 0
@@ -20,7 +17,6 @@ parsePair = do
 parseStrategy :: Parser [(Int, Int)]
 parseStrategy =
   parsePair `sepEndBy` newline
-
 
 score1 (a,b) = ((b+3)-a) `mod` 9 + (b `div` 3) + 1
 part1 = sum . fmap (score1) 
