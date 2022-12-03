@@ -1,3 +1,3 @@
 # AOC
 
-Advent of code.
+Solutions to selected advent of code problems.
