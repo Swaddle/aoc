@@ -18,7 +18,7 @@ parseStrategy :: Parser [(Int, Int)]
 parseStrategy =
   parsePair `sepEndBy` newline
 
-score1 (a,b) = ((b+3)-a) `mod` 9 + (b `div` 3) + 1
+score1 (a,b) = (b+3-a) `mod` 9 + (b `div` 3) + 1
 part1 = sum . fmap (score1) 
 
 score2 (a,b) = (((b+a-3) `mod` 9) `div` 3) + b + 1 
