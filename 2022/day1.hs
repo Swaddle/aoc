@@ -1,6 +1,4 @@
 {-# LANGUAGE OverloadedStrings #-}
-
-
 import Data.Text as T (Text, splitOn, lines)
 import Data.Text.IO as R (readFile)
 import Data.Text.Read (decimal)
