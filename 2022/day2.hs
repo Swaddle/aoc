@@ -17,7 +17,7 @@ parsePair = do
 parseAll :: Parser [(Int, Int)]
 parseAll = parsePair `sepEndBy` newline
 
--- score from your perspective + play value
+-- score from your perspective + value
 score1 (a,b) = (b+3-a) `mod` 9 + (b `div` 3) + 1
 part1 = sum . fmap (score1) 
 
