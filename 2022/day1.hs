@@ -7,6 +7,7 @@ import Data.List
 import Data.Ord
 
 parse x =  (fmap fst) <$> rights <$> (fmap decimal ) <$> (T.lines) <$> splitOn "\n\n" x
+
 part1 = maximum . fmap sum . parse 
 part2 = sum . take 3 . sortBy (comparing Down) . fmap sum . parse 
 

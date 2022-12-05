@@ -17,7 +17,7 @@ parseAll :: Parser [(Int,Int,Int,Int)]
 parseAll = parseLine `sepEndBy` newline
 
 contains (a,b,c,d) = a <= c && b >= d || c <= a && d >= b
-overlaps (a,b,c,d) = a <= d && b >= c || d <= a && c >= b  
+overlaps (a,b,c,d) = a <= d && b >= c 
 
 part1 = length . filter contains 
 part2 = length . filter overlaps

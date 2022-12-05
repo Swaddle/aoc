@@ -4,8 +4,8 @@ import Data.List
 import Data.Char 
 import Data.Set as S (fromList, toList)
 
-parseLine :: Parser [String] 
-parseLine = many (many letter <* endOfLine)
+parseLines :: Parser [String] 
+parseLines = many (many letter <* endOfLine)
 
 chunks n = takeWhile (not . null) . unfoldr (Just . splitAt n)
 priority = flip mod 58 . (14 +) . abs . (52 -) . ord
@@ -15,6 +15,6 @@ part1 = sum . fmap (sum . fmap priority . rmDuplicates . foldr1 intersect . (chu
 part2 = sum . fmap (sum . fmap priority . rmDuplicates . foldr1 intersect) . chunks 3 
 
 main = do 
-    Right x <- parseFromFile parseLine "data/3.txt"  
+    Right x <- parseFromFile parseLines "data/3.txt"  
     print $ part1 x 
     print $ part2 x
