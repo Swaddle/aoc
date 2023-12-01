@@ -1,7 +1,15 @@
-import Data.Text as T (Text, splitOn, lines)
-import Data.Text.IO as R (readFile)
-import Data.Text.Read (decimal)
+import Data.Char (isDigit, isAlpha)
+
+rot xs = take 2 (drop ((length xs)-1) (cycle xs))
+
+count :: String -> Integer
+count = read . 
+        reverse . 
+        rot . 
+        (filter isDigit) 
+        
+part1 = sum . fmap (count) . lines
 
 main = do 
-    input <- R.readFile "../data/input.txt"
-    putStrLn $ show $ input
+    x <- readFile "../data/1.txt"
+    print $ part1 x 
