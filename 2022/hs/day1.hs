@@ -12,6 +12,6 @@ part1 = maximum . fmap sum . parse
 part2 = sum . take 3 . sortBy (comparing Down) . fmap sum . parse 
 
 main = do 
-    x <- R.readFile "data/1.txt"
+    x <- R.readFile "../data/1.txt"
     print (part1 x)
     print (part2 x)
