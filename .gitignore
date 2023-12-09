@@ -24,6 +24,8 @@ cabal.project.local~
 result/
 debug/
 target/
+*debug/
+*target/
 **/*.rs.bk
 *.pdb
 
