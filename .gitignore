@@ -22,3 +22,9 @@ cabal.project.local~
 .HTF/
 .ghc.environment.*
 result/
+debug/
+target/
+**/*.rs.bk
+*.pdb
+
+
