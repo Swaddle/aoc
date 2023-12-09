@@ -28,5 +28,4 @@ target/
 *target/
 **/*.rs.bk
 *.pdb
-
-
+/target
