@@ -26,10 +26,10 @@ fn gen_affine_transform(transformations: &Vec<Transformation>) -> impl Fn(i64) -
 
 
 // Now take a source range, and return a list of output ranges, where some are the identity 
-fn gen_split_affine_transform(trasformation: &Transformation) -> impl Fn(i64) -> [(i64, i64); 2] + '_ {
-    move |source_range| {
-    }
-}
+// fn gen_split_affine_transform(trasformation: &Transformation) -> impl Fn(i64) -> [(i64, i64); 2] + '_ {
+//     move |source_range| {
+//     }
+// }
 
 
 fn parse_transform_row(input: &str) -> IResult<&str, Transformation> {
@@ -97,7 +97,7 @@ fn part_2(contents: &str) {
 
     let (remaining, seeds) = parse_seeds_part1(&contents).unwrap();
     let (_, transforms) = parse_transforms(&remaining).unwrap();
-    let mut tmp = vec![];
+    let mut stage = vec![];
 
     // seeds now represent (start, n), partition up into tuples
     let mut ranges: Vec<(i64, i64)> = seeds.chunks(2).map(|x| (x[0], x[0] + x[1]-1)).collect();
@@ -113,24 +113,28 @@ fn part_2(contents: &str) {
 
     //    println!("part 2: {:?}", ranges);
 
+    for (x, y) in ranges {
+        let iter = x..y;
+        for i in iter {
+            stage.push(i);
+        }
+    }
+
     for transform in &transforms {
+        println!("step");
         let affine_transform = gen_affine_transform(transform);
 
         // now taking the current range, find where 
         // the affine transform is the identity and 
         // create a new range
 
-            // for (x, y) in &ranges {
-            //     tmp.push(affine_transform(*x));
-            //     tmp.push(affine_transform(*y));
-            // }
-
+        stage = stage.iter().map(|x| affine_transform(*x)).collect(); 
         //tmp.sort();
-        ranges = tmp.chunks(2).map(|x| (x[0], x[1])).collect();
-        tmp = vec![];
+        //ranges = tmp.chunks(2).map(|x| (x[0], x[1])).collect();
+        //res = tmp;
     }
-
-    println!("part 2: {:?}", ranges)
+    stage.sort();
+    println!("part 2: {}", stage[0] )
 }
 
 fn main() {
