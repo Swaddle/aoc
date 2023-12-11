@@ -48,14 +48,15 @@ fn main() {
     println!("{:?}", instructions);
     println!("{:?}", nodes);
     
-    let key = "AAA";
+    let mut key = "AAA";
     
     let node_map: HashMap<&str, (&str, &str)> = nodes.into_iter().collect();
     
     let mut count = 0;
     while key != "ZZZ" {
         count += 1;
-        let Some(key) = step(&node_map, key, _instrunction_cycle.next().unwrap()) else { break };
-        println!("{}", key);
+        let Some(new_key) = step(&node_map, key, _instrunction_cycle.next().unwrap()) else { break };
+        key = new_key;
+        println!("next key: {}, count: {}", key, count);
     }
 }
