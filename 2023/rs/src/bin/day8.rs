@@ -1,9 +1,8 @@
 use nom::{
-    branch::alt, bytes::complete::tag, bytes::complete::take_while, character::complete::digit1,
-    character::complete::line_ending, character::is_alphabetic, combinator::map_res, multi::many1,
-    multi::separated_list1, sequence::tuple, IResult,
+    branch::alt, bytes::complete::tag, bytes::complete::take_while,
+    character::complete::line_ending, multi::many1, sequence::tuple, IResult,
 };
-use std::collections::HashMap;
+
 use std::fs;
 
 fn parse_instructions(input: &str) -> IResult<&str, Vec<&str>> {
@@ -11,15 +10,16 @@ fn parse_instructions(input: &str) -> IResult<&str, Vec<&str>> {
 }
 
 fn parse_node(input: &str) -> IResult<&str, (&str, (&str, &str))> {
-    let (remaining, (key, _, _, _, _, left, _, right, _, _)) = tuple((
-        take_while(is_alphabetic),
+    let (remaining, (key, _, _, _, _, left, _,_, right, _, _)) = tuple((
+        take_while(char::is_alphanumeric),
         tag(" "),
         tag("="),
         tag(" "),
         tag("("),
-        take_while(is_alphabetic),
+        take_while(char::is_alphanumeric),
         tag(","),
-        take_while(is_alphabetic),
+        tag(" "),
+        take_while(char::is_alphanumeric),
         tag(")"),
         line_ending,
     ))(input)?;
@@ -42,6 +42,6 @@ fn parse_nodes(input: &str) -> IResult<&str, Vec<(&str, (&str, &str))>> {
 
 fn main() {
     let contents = fs::read_to_string("../data/8.txt").unwrap();
-    let (remaining, instructions) = parse_instructions(&contents).unwrap();
-    let instrunction_cycle = instructions.iter().cycle();
+    let (_remaining, instructions) = parse_instructions(&contents).unwrap();
+    let _instrunction_cycle = instructions.iter().cycle();
 }

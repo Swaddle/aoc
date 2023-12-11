@@ -149,7 +149,7 @@ fn part_2(contents: &str) {
         let split_affines = gen_split_affine_transform(transform);
 
         for (x, y) in &ranges {
-            let mut tmp = split_affines(*x, *y);
+            let tmp = split_affines(*x, *y);
             println!("{:?}", tmp);
 
             for (a, b) in tmp {
