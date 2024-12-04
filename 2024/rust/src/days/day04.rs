@@ -4,7 +4,7 @@ pub fn get_input(filename: &str) -> String {
 }
 
 pub fn check_p1(grid: &std::collections::HashMap<(i32, i32), char>, x: i32, y: i32) -> u32 {
-    let target = ['M', 'A', 'S'];
+    let target = [Some('M'), Some('A'), Some('S')];
     let directions = [
         (1, 0),
         (-1, 0),
@@ -27,7 +27,7 @@ pub fn check_p1(grid: &std::collections::HashMap<(i32, i32), char>, x: i32, y: i
     if grid.get(&(x, y)).copied() == Some('X') {
         for &(dx, dy) in &directions {
             let slice = path(dx, dy);
-            if slice == target.iter().map(|&c| Some(c)).collect::<Vec<_>>() {
+            if slice == target {
                 count += 1;
             }
         }
