@@ -36,6 +36,38 @@ pub fn check_p1(grid: &std::collections::HashMap<(i32, i32), char>, x: i32, y: i
     return count;
 }
 
+pub fn check_p2(grid: &std::collections::HashMap<(i32, i32), char>, x: i32, y: i32) -> u32 {
+    // check if the cell is an 'A'
+
+    // if it is check the diagonals are an 'M' and 'S'
+
+    let target = [Some('M'), Some('S')];
+    let reverse_target = [Some('S'), Some('M')];
+
+    // any combination of
+    //  M .. S
+    //  .. A ..
+    //  S .. M
+    let mut count = 0;
+    if grid.get(&(x, y)).copied() == Some('A') {
+        //
+        let diag_1 = [
+            grid.get(&(x + 1, y + 1)).copied(),
+            grid.get(&(x - 1, y - 1)).copied(),
+        ];
+        let diag_2 = [
+            grid.get(&(x + 1, y - 1)).copied(),
+            grid.get(&(x - 1, y + 1)).copied(),
+        ];
+        if (diag_1 == target || diag_1 == reverse_target)
+            && (diag_2 == target || diag_2 == reverse_target)
+        {
+            count += 1;
+        }
+    }
+    return count;
+}
+
 pub fn p1() -> u64 {
     //input is a grid
     //store grid as hashmap of (x, y)-> char
@@ -54,14 +86,24 @@ pub fn p1() -> u64 {
     let sum: u32 = grid.iter().map(|(k, _)| check_p1(&grid, k.0, k.1)).sum();
 
     println!("part 1: {}", sum);
-    //for each cell in grid
-    //check if starts with 'X'
-    //and then check all 8 directions
-    //if any direction has 'MAS' then increment count
-
-    return 0;
+    return sum as u64;
 }
 
 pub fn p2() -> u64 {
-    return 0;
+    let input = get_input("../data/04.txt");
+    let mut grid = std::collections::HashMap::new();
+
+    let rows = input.lines().enumerate();
+    for (y, row) in rows {
+        let cols = row.chars().enumerate();
+        for (x, c) in cols {
+            grid.insert((x as i32, y as i32), c);
+        }
+    }
+
+    let sum: u32 = grid.iter().map(|(k, _)| check_p2(&grid, k.0, k.1)).sum();
+
+    println!("part 2: {}", sum);
+
+    return sum as u64;
 }
