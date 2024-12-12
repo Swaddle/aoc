@@ -22,7 +22,7 @@ pub fn f(x: u64) -> (u64, Option<u64>) {
     return (x * 2024, None);
 }
 
-
+#[inline(always)]
 pub fn solve(input: Vec<u64>, blinks: u32) -> u64 {
     let mut counts: HashMap<u64, u64> = HashMap::default();
     for x in input {
