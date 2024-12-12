@@ -19,10 +19,10 @@ pub fn solve(input: Vec<usize>, blinks: usize) -> usize {
     for _ in 0..blinks {
         for (key, val) in counts.iter() {
             let (a, b) = f(*key as usize);
-            *new_counts.entry(a).or_insert(0) += *val;
             if let Some(b) = b {
                 *new_counts.entry(b).or_insert(0) += *val;
             }
+            *new_counts.entry(a).or_insert(0) += *val;
         }
         std::mem::swap(&mut counts, &mut new_counts);
         new_counts.clear();
@@ -33,17 +33,20 @@ pub fn solve(input: Vec<usize>, blinks: usize) -> usize {
 pub fn p1() -> usize {
     let t0 = std::time::Instant::now();
     let input = std::fs::read_to_string("../data/11.txt").unwrap();
+
+    let t1 = t0.elapsed();
+    println!("read: {:?}", t1);
+
     let input = input
         .trim()
         .split_whitespace()
         .map(|x| x.parse::<usize>().unwrap())
         .collect::<Vec<usize>>();
+
     let total = solve(input, 75);
-    let t1 = t0.elapsed();
+
+    let t2 = t0.elapsed();
     println!("total: {:?}", total);
-    println!("elapsed: {:?}", t1);
+    println!("elapsed: {:?}", t2);
     return 0;
 }
-
-// 218817038947400
-// 256430761082946
