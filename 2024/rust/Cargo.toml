@@ -4,5 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+fxhash = "0.2.1"
 memmap2 = "0.9.5"
 nom = "7.1.3"
+rayon = "1.10.0"

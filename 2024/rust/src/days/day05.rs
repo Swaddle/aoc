@@ -1,10 +1,10 @@
 use nom::{
-    IResult, 
+    IResult,
     bytes::complete::tag,
     character::complete::{digit1, line_ending},
     combinator::{map_res, opt},
     multi::{many0, separated_list0},
-    sequence::{tuple},
+    sequence::tuple,
 };
 
 fn parse_u32(input: &str) -> IResult<&str, u32> {
@@ -31,7 +31,7 @@ pub fn parse(input: &str) -> IResult<&str, (Vec<(u32, u32)>, Vec<Vec<u32>>)> {
 pub fn p1() -> u64 {
     let t0 = std::time::Instant::now();
     let input = std::fs::read_to_string("../data/05.txt").unwrap();
-    let (rem, (rules, pages)) = parse(&input).unwrap();
+    let (_rem, (_rules, _pages)) = parse(&input).unwrap();
     let t1 = t0.elapsed();
 
     println!("time: {:?}", t1);
