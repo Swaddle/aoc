@@ -43,7 +43,7 @@ pub fn p1() -> usize {
         .map(|x| x.parse::<usize>().unwrap())
         .collect::<Vec<usize>>();
 
-    let total = solve(input, 75);
+    let total = solve(input, 25);
 
     let t2 = t0.elapsed();
     println!("total: {:?}", total);
