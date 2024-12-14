@@ -211,14 +211,35 @@ pub fn p1() -> u64 {
         }
     }
 
+    println!(
+        "solution occurs at t = {} * m2 * {} + {} * m1 * {} mod m1 * m2",
+        min_t_x + 1,
+        grid_height,
+        min_t_y + 1,
+        grid_width
+    );
+
+    println!(
+        "min x symmetry {} found at t_x = {}",
+        min_var_x,
+        min_t_x + 1
+    );
+    println!(
+        "min y symmetry {} found at t_y = {}",
+        min_var_y,
+        min_t_y + 1
+    );
+
     // need to solve
     // t = min_t_x mod grid_width
     // t = min_t_y mod grid_height
 
-    for m1 in -(101 * 103)..(101 * 103) {
-        for m2 in -(101 * 103)..(101 * 103) {
+    let mut m1m2 = vec![];
+    for m1 in -(103)..(103) {
+        for m2 in -(103)..(103) {
             if (m1 * grid_width + m2 * grid_height) == 1 {
                 println!("m1 = {}, m2 = {}", m1, m2);
+                m1m2.push((m1, m2));
             }
         }
     }
@@ -226,15 +247,21 @@ pub fn p1() -> u64 {
     // solution is
     // t = min_t_x * m2 * grid_height + min_t_y * m1 * grid_width
 
-    println!(
-        "t = {} * m2 * {} + {} * m1 * {}",
-        min_t_x, grid_height, min_t_y, grid_width
-    );
+    let mut possible_t = vec![];
+
+    for (m1, m2) in m1m2 {
+        let t = (min_t_x + 1) * m2 * grid_height + (min_t_y + 1) * m1 * grid_width;
+        println!("t = {}", t % (103 * 101));
+        if t > 0 {
+            possible_t.push(t);
+        }
+    }
+
+    // find the smallest positive t that satisfies the equation
+
+    let t_sol = possible_t.iter().min().unwrap();
 
     // 19 * (-50) * 103 + 89 *(51) * 101
-
-    println!("min x symmetry {} found at t_x = {}", min_var_x, min_t_x);
-    println!("min y symmetry {} found at t_y = {}", min_var_y, min_t_y);
 
     let mut robots = parse_input(&input);
 
@@ -242,7 +269,7 @@ pub fn p1() -> u64 {
         &mut robots,
         grid_width as usize,
         grid_height as usize,
-        6887 + 1,
+        *t_sol as usize,
     );
 
     // let count = count_quadrants(&robots, grid_width, grid_height);
