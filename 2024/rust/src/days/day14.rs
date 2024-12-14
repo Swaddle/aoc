@@ -32,17 +32,16 @@ pub fn parse_input(input: &str) -> Vec<Robot> {
     return robots;
 }
 
-pub fn wrap(number: i32, min: i32, max: i32) -> i32 {
-    let range = max - min + 1;
-    if number < min {
-        max - ((min - number - 1) % range)
-    } else if number > max {
-        min + ((number - max - 1) % range)
-    } else {
-        number
+pub fn compute_symmetry(robots: &Vec<Robot>) -> i32 {
+    let mut symmetry = 0;
+    for robot in robots.iter() {
+        let x_sym = robot.x;
+        if robots.iter().filter(|Robot { x, .. }| *x == x_sym).count() == 2 {
+            symmetry += 1;
+        }
     }
+    return symmetry;
 }
-
 
 pub fn simulate_robot(robot: &mut Robot, grid_width: i32, grid_height: i32, t: i32) {
     robot.x = (robot.x + t * robot.v_x).rem_euclid(grid_width);
@@ -84,12 +83,25 @@ pub fn p1() -> u64 {
     // let grid_height = 7; 
     // let grid_width = 11;
 
-    let simulation_steps = 100;
+    let simulation_steps = 1000000;
 
-    for mut robot in robots.iter_mut() {
-        simulate_robot(&mut robot, grid_width, grid_height, 100);
-    }
+    // for mut robot in robots.iter_mut() {
+    //     simulate_robot(&mut robot, grid_width, grid_height, 100);
+    // }
     
+    let mut max_symmetry = 0;
+
+    for t in 0..simulation_steps {
+        
+        let symmetry = compute_symmetry(&robots);
+        if symmetry > max_symmetry {
+            max_symmetry = symmetry;
+            println!("max symmetry {} found at t = {}", symmetry, t);
+        }
+        for mut robot in robots.iter_mut() {
+            simulate_robot(&mut robot, grid_width, grid_height, 1);
+        }
+    }
 
     let count = count_quadrants(&robots, grid_width, grid_height);
     println!("{:?}", count);
