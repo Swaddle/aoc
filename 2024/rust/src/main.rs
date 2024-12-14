@@ -1,6 +1,6 @@
 mod days;
 
-use days::{day01, day04, day05, day11, day13};
+use days::{day01, day04, day05, day11, day13, day14};
 
 fn main() {
     let args = std::env::args().collect::<Vec<String>>();
@@ -30,6 +30,10 @@ fn main() {
         13 => {
             day13::p1();
             //day13::p2();
+        }
+        14 => {
+            day14::p1();
+            //day14::p2();
         }
         _ => println!("day not implemented"),
     }
